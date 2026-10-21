@@ -1439,7 +1439,7 @@ $('#msw').onchange=async()=>{const on=$('#msw').checked;if(!confirm(on?'سایت
 $('#mtsave').onclick=()=>saveMnt();
 /* settings */
 function drawSettings(){ $('#sf').innerHTML=SF.map(([k,l,t])=>`<div class="${t==='t'?'w':''}"><label>${l}</label>${t==='t'?`<textarea data-k="${k}">${esc(S[k])}</textarea>`:`<input data-k="${k}" ${t==='c'?'type="color"':''} value="${esc(S[k])}">`}</div>`).join(''); }
-$('#ss').onclick=async()=>{ const rows=$$('[data-k]').map(e=>({key:e.dataset.k,value:e.value})); const {error}=await sb.from('settings').upsert(rows); toast(error?'خطا: '+error.message:'تنظیمات ذخیره شد ✓');if(!error)autoPub(); };
+$('#ss').onclick=async()=>{ const rows=$$('#sf [data-k]').map(e=>({key:e.dataset.k,value:e.value})); const {error}=await sb.from('settings').upsert(rows); toast(error?'خطا: '+error.message:'تنظیمات ذخیره شد ✓');if(!error)autoPub(); };
 
 }
 </script>
