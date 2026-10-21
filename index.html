@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خطا | سورنا بگ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&family=Noto+Naskh+Arabic:wght@500;700&family=Vazirmatn:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14100d;
+    --bg2:#241a13;
+    --gold:#d4b483;
+    --gold-hi:#f3e2bd;
+    --gold-lo:#8d6e3f;
+    --text:#cbbfae;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(ellipse at 50% 35%, var(--bg2) 0%, var(--bg) 70%);
+    color:var(--text);
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    overflow:hidden;
+  }
+  .frame{
+    position:relative;
+    width:100%;max-width:520px;
+    padding:56px 28px 52px;
+    text-align:center;
+    border:1px solid var(--gold-lo);
+    outline:1px solid rgba(212,180,131,.25);
+    outline-offset:8px;
+  }
+  .frame::before,.frame::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border:1px solid var(--gold);
+    background:var(--bg);
+  }
+  .frame::before{top:-8px;right:-8px;transform:rotate(45deg)}
+  .frame::after{bottom:-8px;left:-8px;transform:rotate(45deg)}
+
+  .brand{
+    font-family:'Noto Naskh Arabic',serif;
+    font-weight:700;
+    font-size:20px;
+    color:var(--gold);
+    letter-spacing:.02em;
+    margin-bottom:34px;
+  }
+  .code{
+    direction:ltr;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:300;
+    font-size:clamp(110px,32vw,190px);
+    line-height:.9;
+    letter-spacing:.04em;
+    background:linear-gradient(100deg,var(--gold-lo) 20%,var(--gold-hi) 45%,var(--gold) 55%,var(--gold-lo) 80%);
+    background-size:250% 100%;
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:sheen 5s ease-in-out infinite;
+  }
+  h1{
+    font-family:'Noto Naskh Arabic',serif;
+    font-weight:500;
+    font-size:clamp(19px,5vw,24px);
+    color:var(--gold-hi);
+    margin-top:18px;
+  }
+  .rule{
+    display:flex;align-items:center;gap:12px;
+    margin:30px auto;width:70%;
+  }
+  .rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-lo))}
+  .rule::after{background:linear-gradient(270deg,transparent,var(--gold-lo))}
+  .rule i{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+  p{
+    font-weight:300;
+    font-size:clamp(16px,4.2vw,19px);
+    line-height:2.1;
+  }
+  p strong{font-weight:400;color:var(--gold)}
+  @keyframes sheen{
+    0%,100%{background-position:100% 0}
+    50%{background-position:0 0}
+  }
+  @media (prefers-reduced-motion:reduce){.code{animation:none}}
+</style>
+</head>
+<body>
+<main class="frame">
+  <div class="brand">سورنا بگ</div>
+  <div class="code">404</div>
+  <h1>خطا: صفحه پیدا نشد</h1>
+  <div class="rule"><i></i></div>
+  <p>به‌زودی وب‌سایت <strong>سورنا بگ</strong><br>افتتاح می‌شود</p>
+</main>
+</body>
+</html>
