@@ -9,7 +9,7 @@
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"><meta name="googlebot" content="index,follow"><meta name="geo.region" content="IR-ALZ"><meta name="geo.placename" content="ماهدشت"><meta name="geo.position" content="35.7200;50.8161"><meta name="ICBM" content="35.7200, 50.8161">
 <meta name="author" content="Sorena Bag">
 <link rel="canonical" href="https://sorenbag.ir/">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co https://api.github.com; frame-src https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'none'; manifest-src 'self' blob: data:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://api.sorenbag.ir; media-src 'self' blob: https://*.supabase.co https://api.sorenbag.ir; connect-src 'self' https://*.supabase.co https://api.sorenbag.ir https://api.github.com; frame-src https://*.google.com; object-src 'none'; base-uri 'self'; form-action 'none'; manifest-src 'self' blob: data:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="application-name" content="Sorena Bag"><meta name="apple-mobile-web-app-title" content="Sorena Bag"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#080D18">
@@ -28,7 +28,15 @@ if(window.__lite)document.documentElement.classList.add('lite');
 var known=/^(|admin|terms|products|process|about|faq|contact|cats|top|blog|p=.*)$/i.test(location.hash.slice(1));if(!known)document.documentElement.classList.add('sec');
 window.__gate=known?Promise.resolve(true):new Promise(function(r){window.__gateRes=r;setTimeout(function(){r(true);var l=document.getElementById('lnk');if(!(l&&l.classList.contains('on')))document.documentElement.classList.remove('sec')},6000)});
 if(location.hash!=='#admin'&&known){window.__vp=fetch(window.__frames?'mobile-frames.bin':window.__pv()).catch(function(){return null})}})()</script>
-<link rel="preconnect" href="https://ywploikvwzgcwwxdmrwt.supabase.co" crossorigin>
+<script>/* Supabase proxy: requests go through our own domain (works without VPN), fall back to direct */
+(function(){var O='https://ywploikvwzgcwwxdmrwt.supabase.co',A='https://api.sorenbag.ir',f=window.fetch;if(!f)return;
+window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url);
+ if(u&&u.indexOf(O)===0){var nu=A+u.slice(O.length),p;
+  try{p=(typeof i==='string')?f.call(window,nu,o):f.call(window,new Request(nu,i),o)}catch(e){return f.apply(window,arguments)}
+  return p.catch(function(e){if(o&&o.signal&&o.signal.aborted)throw e;return f.call(window,i,o)})}
+ return f.apply(window,arguments)};
+document.addEventListener('error',function(e){var t=e.target;if(t&&(t.tagName==='IMG'||t.tagName==='AUDIO'||t.tagName==='VIDEO')&&t.src&&t.src.indexOf(O)===0&&!t.__px){t.__px=1;t.src=A+t.src.slice(O.length)}},true)})();</script>
+<link rel="preconnect" href="https://ywploikvwzgcwwxdmrwt.supabase.co" crossorigin><link rel="preconnect" href="https://api.sorenbag.ir" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet"></noscript>
