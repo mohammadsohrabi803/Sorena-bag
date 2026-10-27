@@ -767,9 +767,12 @@ fetch('status.json?v='+Math.floor(Date.now()/30000),{cache:'no-store'}).then(fun
 </div>
 <div id="adm">
 <div id="login" class="box"><h2 class="gold" style="margin-bottom:14px">ورود مدیر</h2>
-<div class="f"><div class="w"><input id="em" placeholder="نام کاربری گیت‌هاب" dir="ltr"></div><div class="w"><input id="lrp" placeholder="نام مخزن (Repository)" dir="ltr"></div><div class="w"><input id="pw" type="password" placeholder="توکن گیت‌هاب (github_pat_...)" dir="ltr"></div></div>
+<div id="lgA"><div class="f"><div class="w"><input id="lu" placeholder="نام کاربری" dir="ltr" autocomplete="username"></div><div class="w"><input id="lp" type="password" placeholder="رمز عبور" dir="ltr" autocomplete="current-password"></div></div>
+<button class="btn btn-gold" id="lg2" style="width:100%;margin-top:14px">ورود</button>
+<p style="margin-top:14px;text-align:center"><a href="#admin" id="ltg" style="color:var(--mute);font-size:13px;text-decoration:underline">ورود با توکن گیت‌هاب</a></p></div>
+<div id="lgB" style="display:none"><div class="f"><div class="w"><input id="em" placeholder="نام کاربری گیت‌هاب" dir="ltr"></div><div class="w"><input id="lrp" placeholder="نام مخزن (Repository)" dir="ltr"></div><div class="w"><input id="pw" type="password" placeholder="توکن گیت‌هاب (github_pat_...)" dir="ltr"></div></div>
 <details style="margin-top:12px;color:var(--mute);font-size:13px;line-height:2"><summary style="cursor:pointer">توکن را چطور بسازم؟ (فقط یک بار)</summary>گیت‌هاب: Settings، Developer settings، Personal access tokens، Fine-grained tokens، Generate new token. در Repository access گزینه‌ی Only select repositories و مخزن سایت را بزن. در Permissions، بخش Repository permissions، گزینه‌ی <b>Contents</b> را روی <b>Read and write</b> بگذار. توکن را اینجا پیست کن. توکن فقط روی همین دستگاه ذخیره می‌شه.</details>
-<button class="btn btn-gold" id="lg" style="width:100%;margin-top:14px">ورود</button><p id="le" style="color:#ff6b7d;margin-top:8px"></p></div>
+<button class="btn btn-gold" id="lg" style="width:100%;margin-top:14px">ورود با توکن</button></div><p id="le" style="color:#ff6b7d;margin-top:8px"></p></div>
 
 <div id="app" style="display:none">
 <div class="top"><div class="wrap"><h1 class="gold">پنل مدیریت سورنا بگ</h1><a class="sm" href="index.html" target="_blank">مشاهده سایت</a><button class="icon-btn theme-btn"></button><button class="sm red" id="out">خروج</button></div></div>
@@ -797,7 +800,11 @@ fetch('status.json?v='+Math.floor(Date.now()/30000),{cache:'no-store'}).then(fun
     <div><label>شاخه (Branch)</label><input id="gb" dir="ltr"></div></div>
    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn btn-gold" id="gsave">ذخیره و تست اتصال</button><button class="btn btn-line" id="gpub">انتشار همین حالا</button></div>
    <div id="pubst" style="margin-top:14px;color:var(--gold);line-height:2"></div></div>
-  <div class="box"><b>ساخت توکن (فقط یک بار)</b>
+  <div class="box"><h3>نام کاربری و رمز ورود</h3>
+    <p style="color:var(--mute);line-height:2;margin:8px 0 14px">یک نام کاربری و رمز دلخواه بساز تا دفعه‌های بعد (و روی دستگاه‌های دیگه) به‌جای توکن و نام مخزن، فقط با همین‌ها وارد پنل بشی. اطلاعات اتصال با رمزت رمزنگاری می‌شه و در مخزن ذخیره می‌شه. رمز قوی بگذار (حداقل ۱۰ کاراکتر با حرف و عدد) و جایی یادداشتش کن؛ اگر فراموشش کنی باید با توکن وارد بشی.</p>
+    <div class="f"><div><label>نام کاربری</label><input id="au" dir="ltr" autocomplete="off"></div><div><label>رمز عبور</label><input id="ap" type="password" dir="ltr" autocomplete="new-password"></div><div class="w"><label>تکرار رمز</label><input id="ap2" type="password" dir="ltr" autocomplete="new-password"></div></div>
+    <button class="btn btn-gold" id="asave" style="margin-top:14px">ذخیره نام کاربری و رمز</button></div>
+   <div class="box"><b>ساخت توکن (فقط یک بار)</b>
    <ol style="color:var(--mute);line-height:2.2;margin:10px 18px 0">
     <li>گیت‌هاب را باز کن: Settings، بعد Developer settings، بعد Personal access tokens، بعد Fine-grained tokens و Generate new token.</li>
     <li>در Repository access گزینه‌ی Only select repositories را بزن و همین مخزن سایت را انتخاب کن.</li>
@@ -1382,6 +1389,17 @@ const SF=[['brand','نام برند','i'],['tagline','شعار','i'],['hero_titl
 ['marquee','نوار متحرک زیر ویدیو (هر خط یک کلمه)','t'],['cats','دسته‌بندی‌های پیش‌فرض (هر خط یکی)','t'],['process','مراحل تولید (هر خط: عنوان|توضیح)','t'],['cta_title','تیتر بنر سفارش عمده','i'],['cta_text','متن بنر سفارش عمده','t'],['faq','سوالات متداول (هر خط: سوال|جواب)','t'],['seo_title','عنوان سئو (Title) صفحه اصلی','i'],['seo_desc','توضیحات سئو (Description)','t'],['seo_keywords','کلمات کلیدی (با کاما جدا کن)','t'],['terms','متن قوانین و مقررات (## برای تیتر، یک خط خالی بین پاراگراف‌ها)','t'],['statement','جمله بزرگ وسط سایت (کلمه‌ی طلایی بین ستاره *مثل این*)','t'],['about_title','عنوان درباره ما','i'],['about_text','متن درباره ما','t'],['features','ویژگی‌ها (هر خط یکی)','t'],['phones','شماره تلفن‌ها (هر خط یکی)','t'],['address','آدرس','i'],
 ['map_lat','عرض جغرافیایی نقشه','i'],['map_lng','طول جغرافیایی نقشه','i'],['ship_text','متن تب «سفارش و ارسال» در صفحه محصول','t'],['accent_light','رنگ طلایی حالت روز','c'],['accent_dark','رنگ طلایی حالت شب','c']];
 async function session(){ const {data}=await sb.auth.getSession(); const on=!!data.session; $('#login').style.display=on?'none':'block'; $('#app').style.display=on?'block':'none'; if(on) init(); }
+const _enc=u=>btoa(String.fromCharCode(...u)),_dec=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function _key(user,pass,salt,iter){const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(user.trim().toLowerCase()+'\\n'+pass),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:iter,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+$('#ltg').onclick=e=>{e.preventDefault();$('#lgA').style.display='none';$('#lgB').style.display='block'};
+fetch('auth.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.json()}).catch(()=>{$('#lgA').style.display='none';$('#lgB').style.display='block'});
+$('#lg2').onclick=async()=>{const u=$('#lu').value.trim(),p=$('#lp').value,le=$('#le');if(!u||!p){le.textContent='نام کاربری و رمز را وارد کن';return}
+ le.textContent='در حال بررسی…';
+ try{const r=await fetch('auth.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const a=await r.json();
+  const key=await _key(u,p,_dec(a.salt),a.iter);let pt;
+  try{pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:_dec(a.iv)},key,_dec(a.ct))}catch(e){le.textContent='نام کاربری یا رمز اشتباه است';return}
+  const c=JSON.parse(new TextDecoder().decode(pt));localStorage.setItem('gh',JSON.stringify(c));localStorage.removeItem('ghout');le.textContent='';$('#lp').value='';session()
+ }catch(e){le.textContent='ورود ممکن نشد؛ از «ورود با توکن گیت‌هاب» استفاده کن'}};
 $('#lg').onclick=async()=>{const o=$('#em').value.trim(),rp=$('#lrp').value.trim(),tk=$('#pw').value.trim(),le=$('#le');
  if(!o||!rp||!tk){le.textContent='همه‌ی فیلدها را پر کن';return} le.textContent='در حال بررسی…';
  try{const r=await fetch('https://api.github.com/repos/'+encodeURIComponent(o)+'/'+encodeURIComponent(rp),{headers:{Authorization:'Bearer '+tk,Accept:'application/vnd.github+json'}});
@@ -1482,6 +1500,19 @@ const b64text=t=>{const u=new TextEncoder().encode(t);let s='';for(let i=0;i<u.l
 $('#gsave').onclick=async()=>{const c={token:$('#gt').value.trim(),owner:$('#go').value.trim(),repo:$('#gr').value.trim(),branch:($('#gb').value.trim()||'main')};if(!c.token||!c.owner||!c.repo)return toast('همه‌ی فیلدها را پر کن');
  localStorage.setItem('gh',JSON.stringify(c));setPub('در حال تست اتصال…');try{const r=await ghApi('');if(r.ok)setPub('اتصال برقرار است ✓ حالا «انتشار همین حالا» را بزن.');else if(r.status===404)setPub('مخزن پیدا نشد یا توکن به آن دسترسی ندارد. نام کاربری و مخزن را بررسی کن.');else if(r.status===401)setPub('توکن نامعتبر است.');else setPub('خطا: '+r.status)}catch(e){setPub('اتصال به گیت‌هاب ممکن نیست (اینترنت یا فیلترشکن را بررسی کن).')}};
 $('#gpub').onclick=()=>publish();
+$('#asave').onclick=async()=>{const u=$('#au').value.trim(),p=$('#ap').value,c=ghcfg();
+ if(!c||!c.token)return toast('اول با توکن گیت‌هاب وارد شو');if(u.length<3)return toast('نام کاربری حداقل ۳ حرف');
+ if(p.length<10||!/[0-9]/.test(p)||!/[A-Za-z؀-ۿ]/.test(p))return toast('رمز حداقل ۱۰ کاراکتر و شامل حرف و عدد باشد');
+ if(p!==$('#ap2').value)return toast('تکرار رمز یکی نیست');
+ try{toast('در حال ذخیره…');const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),iter=600000;
+  const key=await _key(u,p,salt,iter);
+  const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify({token:c.token,owner:c.owner,repo:c.repo,branch:c.branch||'main'}))));
+  const out=JSON.stringify({v:1,iter,salt:_enc(salt),iv:_enc(iv),ct:_enc(ct)});
+  let sha=null;const ex=await ghApi('auth.json',{q:'?ref='+encodeURIComponent(c.branch||'main')});if(ex.ok)sha=(await ex.json()).sha;
+  const body={message:'update login',content:b64text(out),branch:c.branch||'main'};if(sha)body.sha=sha;
+  const r=await ghApi('auth.json',{method:'PUT',body});if(!r.ok)throw new Error('خطا '+r.status);
+  $('#ap').value='';$('#ap2').value='';toast('ذخیره شد ✓ تا ۱–۲ دقیقه‌ی دیگه با این نام کاربری و رمز وارد شو');
+ }catch(e){toast('خطا: '+(e&&e.message||e))}};
 function autoPub(){sb._schedule(2000)}
 async function publish(){await sb._flush(true)}
 /* hidden links page */
