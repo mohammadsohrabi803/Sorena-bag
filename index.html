@@ -23,11 +23,13 @@
 window.__pv=function(){return innerHeight<=innerWidth?'desktop.mp4':(ios?'mobile.mp4':'mobile-lite.mp4')};
 window.__frames=portrait&&!ios&&typeof createImageBitmap==='function';
 window.__fallback=function(){return 'mobile-lite.mp4'};
+window.__pvs=function(){return innerHeight<=innerWidth?'desktop-s.mp4':'mobile-s.mp4'};
+window.__t0=performance.now();
 window.__lite=!ios&&((n.deviceMemory&&n.deviceMemory<=4)||(n.hardwareConcurrency&&n.hardwareConcurrency<=4)||/[?&]lite=1/.test(location.search));
 if(window.__lite)document.documentElement.classList.add('lite');
 var known=/^(|admin|terms|products|process|about|faq|contact|cats|top|blog|p=.*)$/i.test(location.hash.slice(1));if(!known)document.documentElement.classList.add('sec');
 window.__gate=known?Promise.resolve(true):new Promise(function(r){window.__gateRes=r;setTimeout(function(){r(true);var l=document.getElementById('lnk');if(!(l&&l.classList.contains('on')))document.documentElement.classList.remove('sec')},6000)});
-if(location.hash!=='#admin'&&known){window.__vp=fetch(window.__frames?'mobile-frames.bin':window.__pv()).catch(function(){return null})}})()</script>
+if(location.hash!=='#admin'&&known){window.__vp=fetch(window.__frames?'mobile-frames-s.bin':window.__pvs()).catch(function(){return null})}})()</script>
 <script>/* Supabase proxy: requests go through our own domain (works without VPN), fall back to direct */
 (function(){var O='https://ywploikvwzgcwwxdmrwt.supabase.co',A='https://api.sorenbag.ir',f=window.fetch;if(!f)return;
 window.fetch=function(i,o){var u=typeof i==='string'?i:(i&&i.url);
@@ -1000,11 +1002,21 @@ async function loadVid(u){let r=window.__vp?await window.__vp:null;if(!r||!r.ok)
   let FM=null; const ready0=[];
   const useFrames=window.__frames&&typeof createImageBitmap==='function';
   const ready=new Promise(res=>{v.addEventListener('loadeddata',res,{once:true});v.addEventListener('error',res,{once:true});setTimeout(res,20000)});
+  async function readAll(r,p0,p1){const tot=+r.headers.get('content-length')||0,rd=r.body.getReader(),ch=[];let got=0;
+    for(;;){const {done,value}=await rd.read();if(done)break;ch.push(value);got+=value.length;if(tot)setProg(p0+(p1-p0)*Math.min(.99,got/tot))}
+    return new Blob(ch)}
+  /* two tiers: small file first (opens fast); full-quality file only if the connection can fetch it quickly */
+  async function tiered(smallUrl,fullUrl,fullBytes){
+    let r=null;try{r=await (window.__vp||fetch(smallUrl))}catch(e){}
+    window.__vp=null;
+    if(!r||!r.ok){const rf=await fetch(fullUrl);if(!rf.ok)throw new Error('http');return readAll(rf,0,1)}
+    const b1=await readAll(r,0,.4);
+    const dt=Math.max(.2,(performance.now()-(window.__t0||0))/1000);
+    if(fullBytes/(b1.size/dt)<=9){try{const r2=await fetch(fullUrl);if(r2.ok)return await readAll(r2,.4,1)}catch(e){}}
+    setProg(1);return b1}
   async function loadFrames(){
-    const r=await (window.__vp||fetch('mobile-frames.bin')); if(!r||!r.ok)throw new Error('nf');
-    const tot=+r.headers.get('content-length')||0,rd=r.body.getReader(),ch=[];let got=0;
-    for(;;){const {done,value}=await rd.read();if(done)break;ch.push(value);got+=value.length;if(tot)setProg(Math.min(.99,got/tot))}
-    const buf=await new Blob(ch).arrayBuffer(),dv=new DataView(buf);
+    const blob=await tiered('mobile-frames-s.bin','mobile-frames.bin',4.5e6);
+    const buf=await blob.arrayBuffer(),dv=new DataView(buf);
     if(dv.getUint32(0,true)!==0x31464253)throw new Error('bad');
     const N=dv.getUint32(4,true),W=dv.getUint32(8,true),H=dv.getUint32(12,true),off=[],sz=[];let o=16+N*4;
     for(let i=0;i<N;i++){const z=dv.getUint32(16+i*4,true);off.push(o);sz.push(z);o+=z}
@@ -1020,7 +1032,8 @@ async function loadVid(u){let r=window.__vp?await window.__vp:null;if(!r||!r.ok)
     if(FM.cache.size>26){for(const [k,bm] of FM.cache){if(Math.abs(k-i)>13){bm.close&&bm.close();FM.cache.delete(k);if(FM.shown===bm)FM.shown=null}}}}
   let framesOK=false;
   if(useFrames){try{await loadFrames();framesOK=true}catch(e){framesOK=false;FM=null;window.__vp=null}}
-  if(!framesOK){ try{ v.src=URL.createObjectURL(await loadVid(window.__fallback?window.__fallback():vu)); }catch(e){ v.src=vu; setProg(1); } }
+  if(!framesOK&&useFrames){window.__t0=performance.now()}
+  if(!framesOK){ try{ const SZ={'desktop.mp4':6.6e6,'mobile.mp4':5.6e6,'mobile-lite.mp4':4.5e6}; v.src=URL.createObjectURL(new Blob([await tiered(window.__pvs(),vu,SZ[vu]||5.6e6)],{type:'video/mp4'})); }catch(e){ v.src=vu; setProg(1); } }
   if(!framesOK){v.load(); v.pause();}
   let target=0,cur=0,dur=0;
   v.addEventListener('loadedmetadata',()=>dur=v.duration||8);
