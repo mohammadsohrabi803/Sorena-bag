@@ -985,7 +985,7 @@ function hidePre(){if(_h)return;_h=1;_vf=1;setTimeout(()=>{const p=$('#pre');p.c
 function setProg(f){_vf=f}
 (function loop(){const pe=$('#pre');if(!pe||pe.classList.contains('off'))return;const t=_h?1:Math.min(.985,.08*_dd+.92*_vf);_sh+=(t-_sh)*.07;if(_h&&_sh>.994)_sh=1;const n=Math.round(_sh*100);
   $('#ppn').textContent=fa(n);$('#pbi').style.width=(_sh*100)+'%';$('#pst').textContent=n<12?'در حال آماده‌سازی…':n<97?'در حال بارگذاری ویدیو…':'آماده‌ایم ✦';requestAnimationFrame(loop)})();
-setTimeout(()=>{if(!_h){const b=$('#pskip');if(b)b.style.display=''}},18000);
+setTimeout(()=>{if(!_h){const b=$('#pskip');if(b)b.style.display=''}},7000);
 $('#pskip').onclick=()=>{_vd=1;_dd=1;hidePre()};
 async function loadVid(u){let r=window.__vp?await window.__vp:null;if(!r||!r.ok)r=await fetch(u);if(!r.ok)throw new Error('http');const tot=+r.headers.get('content-length')||0,rd=r.body.getReader(),ch=[];let got=0;
   for(;;){const {done,value}=await rd.read();if(done)break;ch.push(value);got+=value.length;if(tot)setProg(Math.min(.99,got/tot))}
@@ -1079,14 +1079,14 @@ function closeTerms(){$('#tov').classList.remove('on');lockScroll(false);if(loca
 function initMusic(){
   const u=S.music_url; if(!u||!/^(https:\/\/|uploads\/)/.test(u)) return;
   const b=$('#mus'); b.style.display='';
-  const A=new Audio(); A.src=u; A.loop=true; A.volume=.55; A.preload='auto';
+  const A=new Audio(); A.src=u; A.loop=true; A.volume=.55; A.preload='none';
   let muted=false,started=false; try{muted=localStorage.getItem('mus')==='off'}catch(e){}
   const upd=()=>{const off=muted||A.paused;b.classList.toggle('off',off);b.innerHTML=ico(off?'mute':'music')};
   const evs=['pointerdown','touchend','click','keydown'];
   const rm=()=>evs.forEach(e=>removeEventListener(e,go,true));
   const start=()=>{if(muted||!A.paused)return;A.play().then(()=>{started=true;upd();rm()}).catch(()=>{})};
   const go=e=>{if(e&&e.target&&e.target.closest&&e.target.closest('#mus'))return;start()};
-  evs.forEach(e=>addEventListener(e,go,true)); start(); upd();
+  upd();
   b.onclick=e=>{e.stopPropagation();if(A.paused||muted){muted=false;try{localStorage.setItem('mus','on')}catch(x){}A.play().then(()=>{started=true;upd();rm()}).catch(()=>{})}else{muted=true;try{localStorage.setItem('mus','off')}catch(x){}A.pause();upd()}};
   document.addEventListener('visibilitychange',()=>{if(document.hidden)A.pause();else if(!muted&&started)A.play().catch(()=>{})});
 }
@@ -1206,6 +1206,7 @@ $('#q').oninput=render; $('#cat').onchange=render; $('#so').onchange=render;
   $('#map').src=`https://maps.google.com/maps?q=${la},${lo}&z=16&output=embed`;
   $('#gmap').href=`https://www.google.com/maps?q=${la},${lo}`; $('#amap').href=`https://maps.apple.com/maps?ll=${la},${lo}&q=${la},${lo}&t=m`;
   const buildCatalog=()=>{
+  try{P.forEach(p=>{const u=imgs(p)[0];if(u){const im=new Image();im.decoding='async';im.src=imgClean(u)}})}catch(e){}
   const cats=[...new Set(P.map(p=>p.category).filter(Boolean))];
   $('#cat').innerHTML='<option value="">همه دسته‌ها</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
   const names=cats.length?cats:lines(S.cats), IC=["<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"url(#gg)\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 27h42l4.5 28a3 3 0 0 1-3 3.5H9.5a3 3 0 0 1-3-3.5z\" fill=\"url(#gf)\"/><path d=\"M21 27v-6a11 11 0 0 1 22 0v6\"/><path d=\"M9 36c14 6 32 6 46 0\"/><rect x=\"28.5\" y=\"38\" width=\"7\" height=\"8\" rx=\"2\" fill=\"url(#gg)\" stroke=\"none\"/><path d=\"M14 52h36\" stroke-dasharray=\"2 3.2\" opacity=\".6\"/></svg>", "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"url(#gg)\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 20a8 8 0 0 1 8-8h16a8 8 0 0 1 8 8v34a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4z\" fill=\"url(#gf)\"/><path d=\"M27 12v-2a5 5 0 0 1 10 0v2\"/><path d=\"M21 38a4 4 0 0 1 4-4h14a4 4 0 0 1 4 4v14H21z\"/><path d=\"M20 26h24\" stroke-dasharray=\"2 3.2\" opacity=\".7\"/><circle cx=\"44\" cy=\"26\" r=\"1.8\" fill=\"url(#gg)\" stroke=\"none\"/><path d=\"M16 28c-5 1-8 5-8 12v8M48 28c5 1 8 5 8 12v8\"/></svg>", "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"url(#gg)\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 30h46v22a5 5 0 0 1-5 5H14a5 5 0 0 1-5-5z\" fill=\"url(#gf)\"/><path d=\"M9 30c0 9 10.5 14 23 14s23-5 23-14\"/><path d=\"M17 30C13 10 25 6 32 6s19 4 15 24\"/><circle cx=\"32\" cy=\"44\" r=\"3.4\" fill=\"url(#gg)\" stroke=\"none\"/></svg>", "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"url(#gg)\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 24a5 5 0 0 1 5-5h40a5 5 0 0 1 5 5v28a5 5 0 0 1-5 5H12a5 5 0 0 1-5-5z\" fill=\"url(#gf)\"/><path d=\"M24 19v-4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4\"/><path d=\"M7 35h50\"/><rect x=\"28\" y=\"31.5\" width=\"8\" height=\"8\" rx=\"2\" fill=\"url(#gg)\" stroke=\"none\"/></svg>", "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"url(#gg)\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 28h48v24a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6z\" fill=\"url(#gf)\"/><path d=\"M8 28c0-7 6-12 14-12h20c8 0 14 5 14 12\"/><path d=\"M13 35h38\" stroke-dasharray=\"2 3.2\" opacity=\".7\"/><circle cx=\"32\" cy=\"35\" r=\"2.4\" fill=\"url(#gg)\" stroke=\"none\"/><path d=\"M32 37.5v6\"/></svg>", "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"url(#gg)\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 25h38l-3.5 31a3 3 0 0 1-3 2.6h-25a3 3 0 0 1-3-2.6z\" fill=\"url(#gf)\"/><path d=\"M22 25v-5a10 10 0 0 1 20 0v5\"/><rect x=\"26\" y=\"38\" width=\"12\" height=\"9\" rx=\"2\"/><path d=\"M29 42.5h6\" opacity=\".7\"/></svg>"];
