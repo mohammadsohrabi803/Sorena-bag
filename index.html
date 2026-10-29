@@ -985,7 +985,7 @@ function hidePre(){if(_h)return;_h=1;_vf=1;setTimeout(()=>{const p=$('#pre');p.c
 function setProg(f){_vf=f}
 (function loop(){const pe=$('#pre');if(!pe||pe.classList.contains('off'))return;const t=_h?1:Math.min(.985,.08*_dd+.92*_vf);_sh+=(t-_sh)*.07;if(_h&&_sh>.994)_sh=1;const n=Math.round(_sh*100);
   $('#ppn').textContent=fa(n);$('#pbi').style.width=(_sh*100)+'%';$('#pst').textContent=n<12?'در حال آماده‌سازی…':n<97?'در حال بارگذاری ویدیو…':'آماده‌ایم ✦';requestAnimationFrame(loop)})();
-setTimeout(()=>{if(!_h){const b=$('#pskip');if(b)b.style.display=''}},7000);
+setTimeout(()=>{if(!_h){const b=$('#pskip');if(b)b.style.display=''}},18000);
 $('#pskip').onclick=()=>{_vd=1;_dd=1;hidePre()};
 async function loadVid(u){let r=window.__vp?await window.__vp:null;if(!r||!r.ok)r=await fetch(u);if(!r.ok)throw new Error('http');const tot=+r.headers.get('content-length')||0,rd=r.body.getReader(),ch=[];let got=0;
   for(;;){const {done,value}=await rd.read();if(done)break;ch.push(value);got+=value.length;if(tot)setProg(Math.min(.99,got/tot))}
@@ -1223,7 +1223,7 @@ $('#q').oninput=render; $('#cat').onchange=render; $('#so').onchange=render;
   if(location.hash.startsWith('#p=')){const c=decodeURIComponent(location.hash.slice(3));const p=P.find(x=>x.code===c);if(p)openP(p.id);}
   const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.12});
   $$('.rv:not(.on)').forEach(el=>io.observe(el));
-  _dd=1; tryFinish(); setTimeout(()=>{_vd=1;tryFinish()},4000);
+  _dd=1; tryFinish();
   if(location.hash==='#terms')openTerms();
   if(S.seo_title)document.title=S.seo_title;
   if(S.seo_desc){const m=document.querySelector('meta[name=description]');m&&m.setAttribute('content',S.seo_desc)}
