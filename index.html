@@ -592,6 +592,12 @@ textarea{min-height:110px;resize:vertical}
 .msw{position:relative;display:inline-block;width:64px;height:34px;flex:none;cursor:pointer}.msw input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:2}
 .msw span{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.3s}.msw span:before{content:"";position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;background:#fff;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .msw input:checked+span{background:#d6384b}.msw input:checked+span:before{transform:translateX(-30px)}
+.exp{display:inline-block;margin-top:16px;padding:8px 22px;border-radius:99px;font-weight:800;font-size:clamp(13px,3.6vw,16px);color:#F8E3A8;background:rgba(198,161,91,.16);border:1px solid rgba(217,182,111,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.xp{padding:46px 0;background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.xp .wrap{display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,32px);flex-wrap:wrap;text-align:center}
+.xpn{font-size:clamp(72px,18vw,128px);font-weight:900;line-height:1;letter-spacing:-2px}
+.xpt{text-align:right}.xpt b{display:block;font-size:clamp(22px,5.4vw,34px);font-weight:900;color:var(--text)}.xpt span{display:block;margin-top:4px;color:var(--mute);font-size:clamp(14px,3.6vw,17px)}
+@media(max-width:560px){.xpt{text-align:center}}
 </style>
 <style id="mnt-css">
 html.mnt-on{overflow:hidden!important}
@@ -683,7 +689,7 @@ fetch('status.json?v='+Math.floor(Date.now()/30000),{cache:'no-store'}).then(fun
     <canvas id="vc" class="vc" style="display:none"></canvas>
     <video id="vid" muted playsinline preload="auto" webkit-playsinline></video>
     <div class="hl" id="l0"><img data-logo alt="سورنا بگ"></div>
-    <div class="hl" id="l1" style="opacity:0"><h1 class="gold" id="ht">کیف و کوله‌ای که همراه همه‌ی روزهای توست</h1><p id="hs">طراحی مدرن، دوخت مقاوم، قیمت مستقیم از تولیدی</p></div>
+    <div class="hl" id="l1" style="opacity:0"><h1 class="gold" id="ht">کیف و کوله‌ای که همراه همه‌ی روزهای توست</h1><p id="hs">طراحی مدرن، دوخت مقاوم، قیمت مستقیم از تولیدی</p><div class="exp">۲۰ سال سابقه‌ی تولید کیف و کوله‌پشتی</div></div>
     <div class="hl" id="l2" style="opacity:0"><div class="cap gold" id="cap"></div></div>
     <div class="hl end" id="l3" style="opacity:0;visibility:hidden"><a class="btn btn-gold" href="#products">مشاهده محصولات <i data-i="down"></i></a></div>
     <canvas id="pc"></canvas>
@@ -693,6 +699,8 @@ fetch('status.json?v='+Math.floor(Date.now()/30000),{cache:'no-store'}).then(fun
 </div>
 
 <div class="marq"><div class="mt" id="mq"></div><div class="mt r" id="mq2"></div></div>
+
+<section class="xp"><div class="wrap"><div class="xpn gold">۲۰</div><div class="xpt"><b>سال سابقه‌ی کاری</b><span>تولید حرفه‌ای کیف و کوله‌پشتی در ماهدشت</span></div></div></section>
 
 <section id="cats"><div class="wrap">
   <div class="rv" style="text-align:center"><div class="eyebrow">CATEGORIES</div><h2 class="title">دسته‌بندی <span class="gold">محصولات</span></h2></div>
